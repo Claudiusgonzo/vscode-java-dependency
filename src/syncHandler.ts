@@ -8,6 +8,7 @@ import { Commands } from "./commands";
 import { Settings } from "./settings";
 import { DataNode } from "./views/dataNode";
 import { ExplorerNode } from "./views/explorerNode";
+import { HierarchicalPackageRootNode } from "./views/hierarchicalPackageRootNode";
 import { explorerNodeCache } from "./views/nodeCache/explorerNodeCache";
 import { PackageRootNode } from "./views/packageRootNode";
 
@@ -72,6 +73,11 @@ class SyncHandler implements Disposable {
         }
 
         if (Settings.isHierarchicalView()) {
+            // TODO: has to get the hierarchical package root node due to the java side implementation
+            // currently it will only get the types for a package node.
+            while (!(node instanceof HierarchicalPackageRootNode)) {
+                node = <DataNode>node.getParent();
+            }
             return node;
         } else {
             // in flat view

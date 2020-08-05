@@ -101,6 +101,9 @@ export class TrieNode {
 
     public removeChildren(): void {
         this._children = {};
+        if (this._value?.nodeData?.children) {
+            this._value.nodeData.children = undefined;
+        }
     }
 }
 
